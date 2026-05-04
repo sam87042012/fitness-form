@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026 五月份健身體驗課報名</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --primary: #1a1a2e; --accent: #e8ff3b; --accent2: #ff6b35;
+    --surface: #f8f7f2; --card: #ffffff; --text: #1a1a2e;
+    --muted: #6b6b7b; --border: rgba(26,26,46,0.12); --radius: 16px; --input-h: 52px;
+  }
+  body { font-family: 'DM Sans', sans-serif; background: var(--surface); color: var(--text); min-height: 100vh; }
+  .hero { background: var(--primary); padding: 56px 32px 80px; position: relative; overflow: hidden; }
+  .hero::before { content: ''; position: absolute; top: -60px; right: -60px; width: 300px; height: 300px; background: var(--accent); border-radius: 50%; opacity: 0.08; }
+  .hero::after { content: ''; position: absolute; bottom: -40px; left: 30%; width: 200px; height: 200px; background: var(--accent2); border-radius: 50%; opacity: 0.1; }
+  .badge { display: inline-flex; align-items: center; gap: 6px; background: var(--accent); color: var(--primary); font-family: 'Syne', sans-serif; font-weight: 700; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; padding: 6px 14px; border-radius: 100px; margin-bottom: 24px; }
+  .badge-dot { width: 6px; height: 6px; background: var(--primary); border-radius: 50%; animation: pulse 1.5s ease-in-out infinite; }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(0.6)} }
+  .hero h1 { font-family: 'Syne', sans-serif; font-size: clamp(32px,6vw,52px); font-weight: 800; color: #fff; line-height: 1.1; margin-bottom: 16px; }
+  .hero h1 span { color: var(--accent); }
+  .hero-desc { font-size: 15px; font-weight: 300; color: rgba(255,255,255,0.7); line-height: 1.7; max-width: 480px; margin-bottom: 32px; }
+  .hero-tags { display: flex; flex-wrap: wrap; gap: 10px; }
+  .hero-tag { display: flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); color: rgba(255,255,255,0.85); font-size: 13px; padding: 8px 16px; border-radius: 100px; }
+  .form-wrap { max-width: 680px; margin: -32px auto 48px; padding: 0 16px; position: relative; z-index: 10; }
+  .progress-card { background: var(--accent); border-radius: var(--radius) var(--radius) 0 0; padding: 16px 24px; display: flex; align-items: center; justify-content: space-between; }
+  .progress-label { font-family: 'Syne', sans-serif; font-size: 12px; font-weight: 700; color: var(--primary); letter-spacing: 0.08em; text-transform: uppercase; }
+  .progress-steps { display: flex; gap: 6px; }
+  .step-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--primary); opacity: 0.25; transition: opacity 0.3s; }
+  .step-dot.active { opacity: 1; } .step-dot.done { opacity: 0.5; }
+  .form-card { background: var(--card); border-radius: 0 0 var(--radius) var(--radius); padding: 32px 28px; box-shadow: 0 20px 60px rgba(26,26,46,0.1); }
+  .section { display: none; } .section.active { display: block; }
+  .meme-strip { width: calc(100% + 56px); margin: -8px -28px 24px; height: 130px; overflow: hidden; position: relative; background: #f0ede6; border-bottom: 1.5px solid var(--border); display: flex; align-items: center; justify-content: center; }
+  .meme-strip svg { width: 100%; height: 130px; }
+  .meme-caption { position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(transparent, rgba(26,26,46,0.5)); color: white; font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; padding: 8px 14px 6px; text-transform: uppercase; }
+  .section-title { font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 700; color: var(--primary); margin-bottom: 6px; }
+  .section-sub { font-size: 14px; color: var(--muted); margin-bottom: 28px; font-weight: 300; line-height: 1.5; }
+  .field { margin-bottom: 20px; }
+  .field-label { font-size: 13px; font-weight: 500; color: var(--primary); margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
+  .required-dot { width: 5px; height: 5px; background: var(--accent2); border-radius: 50%; display: inline-block; }
+  .radio-group { display: flex; flex-direction: column; gap: 8px; }
+  .radio-item { display: flex; align-items: center; gap: 12px; padding: 13px 16px; border: 1.5px solid var(--border); border-radius: 12px; cursor: pointer; transition: all 0.2s; user-select: none; }
+  .radio-item:hover { border-color: rgba(26,26,46,0.4); background: rgba(26,26,46,0.03); }
+  .radio-item.selected { border-color: var(--primary); background: var(--primary); color: white; }
+  .radio-circle { width: 20px; height: 20px; border-radius: 50%; border: 2px solid rgba(26,26,46,0.25); flex-shrink: 0; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
+  .radio-item.selected .radio-circle { background: var(--accent); border-color: var(--accent); }
+  .radio-item.selected .radio-circle::after { content: ''; width: 8px; height: 8px; background: var(--primary); border-radius: 50%; display: block; }
+  .radio-text { font-size: 14px; font-weight: 400; }
+  .radio-item.selected .radio-text { color: white; font-weight: 500; }
+  .radio-sub { font-size: 12px; opacity: 0.6; margin-top: 2px; }
+  .radio-item.selected .radio-sub { color: var(--accent); opacity: 0.85; }
+  .day-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 8px; }
+  .day-chip { padding: 12px 6px; border: 1.5px solid var(--border); border-radius: 12px; cursor: pointer; text-align: center; font-size: 13px; font-weight: 500; transition: all 0.2s; user-select: none; }
+  .day-chip:hover { border-color: rgba(26,26,46,0.4); }
+  .day-chip.selected { background: var(--primary); border-color: var(--primary); color: white; }
+  .day-chip .day-en { font-size: 11px; opacity: 0.5; margin-top: 2px; font-family: 'Syne', sans-serif; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; }
+  .day-chip.selected .day-en { opacity: 0.6; color: var(--accent); }
+  .time-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .time-chip { padding: 14px 12px; border: 1.5px solid var(--border); border-radius: 12px; cursor: pointer; font-size: 13px; font-weight: 400; transition: all 0.2s; user-select: none; line-height: 1.4; }
+  .time-chip:hover { border-color: rgba(26,26,46,0.4); }
+  .time-chip.selected { background: var(--primary); border-color: var(--primary); color: white; }
+  .time-label { font-weight: 500; font-size: 12px; opacity: 0.5; }
+  .time-chip.selected .time-label { color: var(--accent); opacity: 0.8; }
+  .goal-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .goal-chip { padding: 16px 14px; border: 1.5px solid var(--border); border-radius: 12px; cursor: pointer; transition: all 0.2s; user-select: none; }
+  .goal-chip:hover { border-color: rgba(26,26,46,0.4); }
+  .goal-chip.selected { background: var(--primary); border-color: var(--primary); color: white; }
+  .goal-icon { font-size: 20px; margin-bottom: 8px; }
+  .goal-name { font-size: 14px; font-weight: 500; }
+  .goal-desc { font-size: 12px; opacity: 0.5; margin-top: 3px; }
+  .goal-chip.selected .goal-desc { color: var(--accent); opacity: 0.8; }
+  .text-input { width: 100%; height: var(--input-h); border: 1.5px solid var(--border); border-radius: 12px; padding: 0 16px; font-size: 14px; font-family: 'DM Sans', sans-serif; color: var(--text); background: transparent; outline: none; transition: border-color 0.2s; }
+  .text-input:focus { border-color: var(--primary); }
+  .textarea-input { width: 100%; border: 1.5px solid var(--border); border-radius: 12px; padding: 14px 16px; font-size: 14px; font-family: 'DM Sans', sans-serif; color: var(--text); background: transparent; outline: none; resize: vertical; min-height: 100px; line-height: 1.6; transition: border-color 0.2s; }
+  .textarea-input:focus { border-color: var(--primary); }
+  .nav-row { display: flex; gap: 12px; margin-top: 28px; }
+  .btn-back { flex: 1; height: 52px; border: 2px solid rgba(26,26,46,0.25); border-radius: 12px; background: transparent; font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 500; color: var(--muted); cursor: pointer; transition: all 0.2s; }
+  .btn-back:hover { border-color: var(--primary); color: var(--primary); background: rgba(26,26,46,0.04); }
+  .btn-next { flex: 2; height: 52px; border: none; border-radius: 12px; background: var(--primary); font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 700; color: white; cursor: pointer; transition: all 0.2s; letter-spacing: 0.04em; display: flex; align-items: center; justify-content: center; gap: 10px; box-shadow: 0 4px 16px rgba(26,26,46,0.25); }
+  .btn-next:hover { background: #2d2d4e; transform: translateY(-2px); box-shadow: 0 8px 28px rgba(26,26,46,0.32); }
+  .btn-next.full { flex: 1; }
+  .btn-arrow { width: 28px; height: 28px; border-radius: 50%; background: var(--accent); color: var(--primary); display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; }
+  .btn-submit { flex: 2; height: 52px; border: none; border-radius: 12px; background: var(--accent2); font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 700; color: white; cursor: pointer; transition: all 0.2s; letter-spacing: 0.04em; box-shadow: 0 4px 16px rgba(255,107,53,0.35); }
+  .btn-submit:hover { background: #e05520; transform: translateY(-2px); box-shadow: 0 8px 28px rgba(255,107,53,0.4); }
+  .success-view { display: none; text-align: center; padding: 48px 24px; }
+  .success-icon { width: 72px; height: 72px; background: var(--accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 24px; font-size: 28px; }
+  .success-title { font-family: 'Syne', sans-serif; font-size: 28px; font-weight: 800; color: var(--primary); margin-bottom: 12px; }
+  .success-desc { font-size: 15px; color: var(--muted); line-height: 1.7; max-width: 340px; margin: 0 auto 32px; }
+  .info-box { background: #fff8f0; border: 1.5px solid rgba(255,107,53,0.2); border-radius: 12px; padding: 14px 16px; margin-bottom: 20px; font-size: 13px; color: #7a3a1a; line-height: 1.6; }
+  .info-box strong { color: var(--accent2); }
+  .trial-banner { background: var(--primary); border-radius: 14px; padding: 20px; margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+  .trial-left { flex: 1; }
+  .trial-tag { font-family: 'Syne', sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); margin-bottom: 6px; }
+  .trial-name { font-family: 'Syne', sans-serif; font-size: 18px; font-weight: 800; color: white; }
+  .trial-desc { font-size: 12px; color: rgba(255,255,255,0.55); margin-top: 4px; }
+  .trial-price { text-align: right; flex-shrink: 0; }
+  .trial-amt { font-family: 'Syne', sans-serif; font-size: 32px; font-weight: 800; color: var(--accent); line-height: 1; }
+  .trial-unit { font-size: 12px; color: rgba(255,255,255,0.5); margin-top: 4px; }
+  @media (max-width: 480px) {
+    .hero { padding: 40px 20px 70px; }
+    .form-card { padding: 24px 20px; }
+    .meme-strip { width: calc(100% + 40px); margin-left: -20px; margin-right: -20px; }
+    .day-grid { grid-template-columns: repeat(4,1fr); }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="badge"><span class="badge-dot"></span>2026 五月份開放報名</div>
+  <h1>開始你的<br><span>健身旅程</span></h1>
+  <p class="hero-desc">每堂課程針對你的身體結構與習慣量身設計，讓訓練真正適合你——而不是讓你去配合課表。</p>
+  <div class="hero-tags">
+    <div class="hero-tag">⏱ 每堂 60 分鐘</div>
+    <div class="hero-tag">💰 體驗課 $600</div>
+    <div class="hero-tag">📍 中山區為主</div>
+  </div>
+</div>
+
+<div class="form-wrap">
+  <div class="progress-card" id="progressCard">
+    <span class="progress-label">報名進度</span>
+    <div class="progress-steps">
+      <div class="step-dot active"></div><div class="step-dot"></div><div class="step-dot"></div><div class="step-dot"></div><div class="step-dot"></div>
+    </div>
+  </div>
+  <div class="form-card">
+
+    <!-- Step 0 -->
+    <div class="section active" id="sec0">
+      <div class="meme-strip">
+        <svg viewBox="0 0 680 130" xmlns="http://www.w3.org/2000/svg">
+          <rect width="680" height="130" fill="#fef3e2"/>
+          <ellipse cx="340" cy="118" rx="200" ry="8" fill="#f5d99a" opacity="0.5"/>
+          <ellipse cx="300" cy="90" rx="38" ry="28" fill="#f4a742"/>
+          <circle cx="300" cy="60" r="24" fill="#f4a742"/>
+          <polygon points="282,42 275,25 293,38" fill="#f4a742"/>
+          <polygon points="318,42 325,25 307,38" fill="#f4a742"/>
+          <polygon points="284,40 279,28 291,38" fill="#f9c6a0"/>
+          <polygon points="316,40 321,28 309,38" fill="#f9c6a0"/>
+          <ellipse cx="293" cy="62" rx="4" ry="5" fill="#2a1a0a"/>
+          <ellipse cx="307" cy="62" rx="4" ry="5" fill="#2a1a0a"/>
+          <circle cx="294" cy="61" r="1.5" fill="white"/>
+          <circle cx="308" cy="61" r="1.5" fill="white"/>
+          <ellipse cx="300" cy="68" rx="3" ry="2" fill="#e8748a"/>
+          <path d="M296,71 Q300,75 304,71" stroke="#2a1a0a" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <line x1="270" y1="66" x2="292" y2="68" stroke="#2a1a0a" stroke-width="1" opacity="0.6"/>
+          <line x1="270" y1="70" x2="292" y2="70" stroke="#2a1a0a" stroke-width="1" opacity="0.6"/>
+          <line x1="308" y1="68" x2="330" y2="66" stroke="#2a1a0a" stroke-width="1" opacity="0.6"/>
+          <line x1="308" y1="70" x2="330" y2="70" stroke="#2a1a0a" stroke-width="1" opacity="0.6"/>
+          <path d="M262,95 Q230,75 240,108" stroke="#f4a742" stroke-width="8" fill="none" stroke-linecap="round"/>
+          <ellipse cx="278" cy="113" rx="12" ry="7" fill="#f4a742"/>
+          <ellipse cx="322" cy="113" rx="12" ry="7" fill="#f4a742"/>
+          <ellipse cx="286" cy="70" rx="6" ry="4" fill="#f9a8c0" opacity="0.45"/>
+          <ellipse cx="314" cy="70" rx="6" ry="4" fill="#f9a8c0" opacity="0.45"/>
+          <rect x="340" y="20" rx="12" ry="12" width="200" height="54" fill="white" stroke="#e8d0b0" stroke-width="1.5"/>
+          <polygon points="348,74 338,84 358,74" fill="white"/>
+          <polygon points="349,74 338,86 358,74" fill="#e8d0b0"/>
+          <polygon points="349,74 338,83 358,74" fill="white"/>
+          <text x="440" y="44" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="700" fill="#1a1a2e">你也太有眼光了吧！</text>
+          <text x="440" y="62" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#6b6b7b">快來報名，讓我們開始！</text>
+          <text x="390" y="18" font-size="14" fill="#f4a742">✦</text>
+          <text x="530" y="22" font-size="10" fill="#e8ff3b">★</text>
+        </svg>
+        <div class="meme-caption">你也太有眼光了，歡迎報名！</div>
+      </div>
+      <div class="section-title">關於你</div>
+      <div class="section-sub">先讓我認識你一下！這些資訊幫助我在課前就開始思考你的訓練方向。</div>
+      <div class="field">
+        <div class="field-label"><span class="required-dot"></span>你的性別</div>
+        <div class="radio-group">
+          <div class="radio-item" onclick="selectRadio(this,'gender')"><div class="radio-circle"></div><div><div class="radio-text">男性</div></div></div>
+          <div class="radio-item" onclick="selectRadio(this,'gender')"><div class="radio-circle"></div><div><div class="radio-text">女性</div></div></div>
+          <div class="radio-item" onclick="selectRadio(this,'gender')"><div class="radio-circle"></div><div><div class="radio-text">不方便透露</div></div></div>
+        </div>
+      </div>
+      <div class="field">
+        <div class="field-label"><span class="required-dot"></span>年齡區間</div>
+        <div class="radio-group">
+          <div class="radio-item" onclick="selectRadio(this,'age')"><div class="radio-circle"></div><div><div class="radio-text">18 歲以下</div></div></div>
+          <div class="radio-item" onclick="selectRadio(this,'age')"><div class="radio-circle"></div><div><div class="radio-text">18–25 歲</div></div></div>
+          <div class="radio-item" onclick="selectRadio(this,'age')"><div class="radio-circle"></div><div><div class="radio-text">26–35 歲</div></div></div>
+          <div class="radio-item" onclick="selectRadio(this,'age')"><div class="radio-circle"></div><div><div class="radio-text">36–45 歲</div></div></div>
+          <div class="radio-item" onclick="selectRadio(this,'age')"><div class="radio-circle"></div><div><div class="radio-text">46 歲以上</div></div></div>
+        </div>
+      </div>
+      <div class="field">
+        <div class="field-label"><span class="required-dot"></span>健身經驗</div>
+        <div class="radio-group">
+          <div class="radio-item" onclick="selectRadio(this,'exp')"><div class="radio-circle"></div><div><div class="radio-text">我是新手，完全沒有經驗</div></div></div>
+          <div class="radio-item" onclick="selectRadio(this,'exp')"><div class="radio-circle"></div><div><div class="radio-text">有一點基礎，半年至一年左右</div></div></div>
+          <div class="radio-item" onclick="selectRadio(this,'exp')"><div class="radio-circle"></div><div><div class="radio-text">已有一年以上的訓練經驗</div></div></div>
+          <div class="radio-item" onclick="selectRadio(this,'exp')"><div class="radio-circle"></div><div><div class="radio-text">三年以上，有一定基礎</div></div></div>
+        </div>
+      </div>
+      <div class="nav-row">
+        <button class="btn-next full" onclick="goTo(1)">下一步 <div class="btn-arrow">→</div></button>
+      </div>
+    </div>
+
+    <!-- Step 1 -->
+    <div class="section" id="sec1">
+      <div class="meme-strip">
+        <svg viewBox="0 0 680 130" xmlns="http://www.w3.org/2000/svg">
+          <rect width="680" height="130" fill="#eaf6ff"/>
+          <ellipse cx="340" cy="118" rx="200" ry="8" fill="#b8dff5" opacity="0.4"/>
+          <ellipse cx="310" cy="92" rx="42" ry="30" fill="#d4893a"/>
+          <circle cx="310" cy="58" r="26" fill="#d4893a"/>
+          <ellipse cx="287" cy="65" rx="13" ry="20" fill="#b8712a" transform="rotate(-15,287,65)"/>
+          <ellipse cx="333" cy="65" rx="13" ry="20" fill="#b8712a" transform="rotate(15,333,65)"/>
+          <ellipse cx="302" cy="56" rx="4.5" ry="5" fill="#1a0f00"/>
+          <ellipse cx="318" cy="56" rx="4.5" ry="5" fill="#1a0f00"/>
+          <circle cx="303" cy="55" r="1.5" fill="white"/>
+          <circle cx="319" cy="55" r="1.5" fill="white"/>
+          <ellipse cx="310" cy="65" rx="10" ry="8" fill="#c4783a"/>
+          <ellipse cx="310" cy="63" rx="5" ry="3" fill="#1a0f00"/>
+          <ellipse cx="310" cy="73" rx="7" ry="5" fill="#f07090"/>
+          <ellipse cx="295" cy="63" rx="7" ry="4" fill="#f9a8c0" opacity="0.4"/>
+          <ellipse cx="325" cy="63" rx="7" ry="4" fill="#f9a8c0" opacity="0.4"/>
+          <path d="M352,88 Q380,60 370,100" stroke="#d4893a" stroke-width="9" fill="none" stroke-linecap="round"/>
+          <ellipse cx="288" cy="115" rx="13" ry="8" fill="#d4893a"/>
+          <ellipse cx="330" cy="115" rx="13" ry="8" fill="#d4893a"/>
+          <rect x="370" y="16" rx="12" ry="12" width="230" height="60" fill="white" stroke="#c8e0f0" stroke-width="1.5"/>
+          <polygon points="378,76 365,88 390,76" fill="white"/>
+          <polygon points="379,76 365,90 390,76" fill="#c8e0f0"/>
+          <polygon points="379,76 365,88 390,76" fill="white"/>
+          <text x="485" y="43" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="700" fill="#1a1a2e">目標選好了嗎？</text>
+          <text x="485" y="63" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#6b6b7b">選好我就全力配合你！🎯</text>
+          <text x="400" y="14" font-size="14" fill="#ff6b35">✦</text>
+          <text x="570" y="18" font-size="10" fill="#e8ff3b">★</text>
+        </svg>
+        <div class="meme-caption">選好目標，我們一起衝！</div>
+      </div>
+      <div class="section-title">你的訓練目標</div>
+      <div class="section-sub">了解你最想達到的目標，我才能設計最適合你的課程內容。</div>
+      <div class="field">
+        <div class="field-label"><span class="required-dot"></span>主要目標（可複選）</div>
+        <div class="goal-grid">
+          <div class="goal-chip" onclick="toggleChip(this)"><div class="goal-icon">💪</div><div class="goal-name">增肌</div><div class="goal-desc">增加肌肉量與力量</div></div>
+          <div class="goal-chip" onclick="toggleChip(this)"><div class="goal-icon">🔥</div><div class="goal-name">減脂</div><div class="goal-desc">降低體脂、塑型</div></div>
+          <div class="goal-chip" onclick="toggleChip(this)"><div class="goal-icon">🏃</div><div class="goal-name">提升體能</div><div class="goal-desc">心肺與耐力訓練</div></div>
+          <div class="goal-chip" onclick="toggleChip(this)"><div class="goal-icon">🧘</div><div class="goal-name">改善姿勢</div><div class="goal-desc">矯正體態、舒緩痠痛</div></div>
+          <div class="goal-chip" onclick="toggleChip(this)"><div class="goal-icon">✨</div><div class="goal-name">整體健康</div><div class="goal-desc">維持生活品質與活力</div></div>
+          <div class="goal-chip" onclick="toggleChip(this)"><div class="goal-icon">🎯</div><div class="goal-name">其他</div><div class="goal-desc">備註欄再說明</div></div>
+        </div>
+      </div>
+      <div class="field">
+        <div class="field-label"><span class="required-dot"></span>目前有在接受教練指導嗎？</div>
+        <div class="radio-group">
+          <div class="radio-item" onclick="selectRadio(this,'hasCoach')"><div class="radio-circle"></div><div><div class="radio-text">有，目前正在上教練課</div></div></div>
+          <div class="radio-item" onclick="selectRadio(this,'hasCoach')"><div class="radio-circle"></div><div><div class="radio-text">之前有，現在沒有</div></div></div>
+          <div class="radio-item" onclick="selectRadio(this,'hasCoach')"><div class="radio-circle"></div><div><div class="radio-text">從來沒有，自己訓練</div></div></div>
+        </div>
+      </div>
+      <div class="nav-row">
+        <button class="btn-back" onclick="goTo(0)">← 返回</button>
+        <button class="btn-next" onclick="goTo(2)">下一步 <div class="btn-arrow">→</div></button>
+      </div>
+    </div>
+
+    <!-- Step 2 -->
+    <div class="section" id="sec2">
+      <div class="meme-strip">
+        <svg viewBox="0 0 680 130" xmlns="http://www.w3.org/2000/svg">
+          <rect width="680" height="130" fill="#f0fae8"/>
+          <ellipse cx="340" cy="118" rx="200" ry="8" fill="#b8e8a0" opacity="0.4"/>
+          <ellipse cx="300" cy="100" rx="55" ry="22" fill="#888"/>
+          <circle cx="350" cy="82" r="22" fill="#888"/>
+          <polygon points="338,66 332,50 348,63" fill="#888"/>
+          <polygon points="362,66 368,50 352,63" fill="#888"/>
+          <polygon points="340,64 335,52 347,63" fill="#c0a0b0"/>
+          <polygon points="360,64 365,52 353,63" fill="#c0a0b0"/>
+          <path d="M343,80 Q347,77 351,80" stroke="#2a1a0a" stroke-width="2" fill="none" stroke-linecap="round"/>
+          <path d="M355,80 Q359,77 363,80" stroke="#2a1a0a" stroke-width="2" fill="none" stroke-linecap="round"/>
+          <ellipse cx="353" cy="86" rx="3" ry="2" fill="#e8748a"/>
+          <line x1="326" y1="84" x2="346" y2="86" stroke="#555" stroke-width="1" opacity="0.5"/>
+          <line x1="326" y1="88" x2="346" y2="88" stroke="#555" stroke-width="1" opacity="0.5"/>
+          <line x1="360" y1="86" x2="380" y2="84" stroke="#555" stroke-width="1" opacity="0.5"/>
+          <line x1="360" y1="88" x2="380" y2="88" stroke="#555" stroke-width="1" opacity="0.5"/>
+          <path d="M248,98 Q220,70 245,60 Q265,52 260,75" stroke="#888" stroke-width="8" fill="none" stroke-linecap="round"/>
+          <ellipse cx="270" cy="112" rx="16" ry="8" fill="#777"/>
+          <ellipse cx="310" cy="116" rx="16" ry="8" fill="#777"/>
+          <text x="375" y="65" font-family="sans-serif" font-size="16" font-weight="700" fill="#a0c8a0" opacity="0.9">z</text>
+          <text x="388" y="52" font-family="sans-serif" font-size="20" font-weight="700" fill="#80b880" opacity="0.8">z</text>
+          <text x="404" y="36" font-family="sans-serif" font-size="24" font-weight="700" fill="#60a860" opacity="0.7">Z</text>
+          <rect x="420" y="22" rx="12" ry="12" width="220" height="58" fill="white" stroke="#c0e0b0" stroke-width="1.5"/>
+          <polygon points="428,80 416,92 440,80" fill="white"/>
+          <polygon points="429,80 416,93 440,80" fill="#c0e0b0"/>
+          <polygon points="429,80 416,91 440,80" fill="white"/>
+          <text x="530" y="48" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="700" fill="#1a1a2e">平常都怎麼練的？</text>
+          <text x="530" y="67" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#6b6b7b">老實說，我不評判的！</text>
+        </svg>
+        <div class="meme-caption">說說你平常的訓練習慣吧！</div>
+      </div>
+      <div class="section-title">訓練習慣</div>
+      <div class="section-sub">讓我了解你目前的狀態，這樣我能從最適合的地方開始。</div>
+      <div class="field">
+        <div class="field-label"><span class="required-dot"></span>每週健身頻率</div>
+        <div class="radio-group">
+          <div class="radio-item" onclick="selectRadio(this,'freq')"><div class="radio-circle"></div><div><div class="radio-text">幾乎沒有（0 天）</div></div></div>
+          <div class="radio-item" onclick="selectRadio(this,'freq')"><div class="radio-circle"></div><div><div class="radio-text">1–2 天</div></div></div>
+          <div class="radio-item" onclick="selectRadio(this,'freq')"><div class="radio-circle"></div><div><div class="radio-text">3–4 天</div></div></div>
+          <div class="radio-item" onclick="selectRadio(this,'freq')"><div class="radio-circle"></div><div><div class="radio-text">5–7 天</div></div></div>
+        </div>
+      </div>
+      <div class="field">
+        <div class="field-label"><span class="required-dot"></span>有在做有氧訓練嗎？</div>
+        <div class="radio-group">
+          <div class="radio-item" onclick="selectRadio(this,'cardio')"><div class="radio-circle"></div><div><div class="radio-text">有，定期做有氧（跑步、騎車等）</div></div></div>
+          <div class="radio-item" onclick="selectRadio(this,'cardio')"><div class="radio-circle"></div><div><div class="radio-text">偶爾會，但不規律</div></div></div>
+          <div class="radio-item" onclick="selectRadio(this,'cardio')"><div class="radio-circle"></div><div><div class="radio-text">沒有，以重訓為主</div></div></div>
+          <div class="radio-item" onclick="selectRadio(this,'cardio')"><div class="radio-circle"></div><div><div class="radio-text">完全沒有在運動</div></div></div>
+        </div>
+      </div>
+      <div class="field">
+        <div class="field-label">有任何傷病史或身體限制嗎？</div>
+        <div class="radio-group">
+          <div class="radio-item" onclick="selectRadio(this,'injury')"><div class="radio-circle"></div><div><div class="radio-text">沒有，身體狀況良好</div></div></div>
+          <div class="radio-item" onclick="selectRadio(this,'injury')"><div class="radio-circle"></div><div><div class="radio-text">有舊傷，但已恢復</div><div class="radio-sub">會在備註說明</div></div></div>
+          <div class="radio-item" onclick="selectRadio(this,'injury')"><div class="radio-circle"></div><div><div class="radio-text">有需要注意的部位</div><div class="radio-sub">會在備註說明</div></div></div>
+        </div>
+      </div>
+      <div class="nav-row">
+        <button class="btn-back" onclick="goTo(1)">← 返回</button>
+        <button class="btn-next" onclick="goTo(3)">下一步 <div class="btn-arrow">→</div></button>
+      </div>
+    </div>
+
+    <!-- Step 3 -->
+    <div class="section" id="sec3">
+      <div class="meme-strip">
+        <svg viewBox="0 0 680 130" xmlns="http://www.w3.org/2000/svg">
+          <rect width="680" height="130" fill="#fff5f0"/>
+          <ellipse cx="340" cy="118" rx="200" ry="8" fill="#ffc0a0" opacity="0.35"/>
+          <ellipse cx="300" cy="95" rx="50" ry="22" fill="#e8a050"/>
+          <circle cx="348" cy="74" r="26" fill="#e8a050"/>
+          <ellipse cx="332" cy="57" rx="14" ry="18" fill="#e8a050" transform="rotate(-20,332,57)"/>
+          <ellipse cx="364" cy="57" rx="14" ry="18" fill="#e8a050" transform="rotate(20,364,57)"/>
+          <ellipse cx="332" cy="58" rx="9" ry="13" fill="#f0c090" transform="rotate(-20,332,58)"/>
+          <ellipse cx="364" cy="58" rx="9" ry="13" fill="#f0c090" transform="rotate(20,364,58)"/>
+          <ellipse cx="340" cy="72" rx="4" ry="4.5" fill="#2a1a0a"/>
+          <ellipse cx="356" cy="72" rx="4" ry="4.5" fill="#2a1a0a"/>
+          <circle cx="341" cy="71" r="1.5" fill="white"/>
+          <circle cx="357" cy="71" r="1.5" fill="white"/>
+          <ellipse cx="348" cy="81" rx="9" ry="7" fill="#f0b870"/>
+          <ellipse cx="348" cy="79" rx="4" ry="2.5" fill="#2a1a0a"/>
+          <ellipse cx="348" cy="88" rx="6" ry="5" fill="#f07090"/>
+          <rect x="400" y="18" rx="12" ry="12" width="240" height="58" fill="white" stroke="#f0c0b0" stroke-width="1.5"/>
+          <polygon points="408,76 395,88 420,76" fill="white"/>
+          <polygon points="409,76 395,90 420,76" fill="#f0c0b0"/>
+          <polygon points="409,76 395,88 420,76" fill="white"/>
+          <text x="520" y="44" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="700" fill="#1a1a2e">什麼時候最適合出動？</text>
+          <text x="520" y="63" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#6b6b7b">我隨時都準備好了！🏃</text>
+          <text x="408" y="16" font-size="13" fill="#ff6b35">✦</text>
+        </svg>
+        <div class="meme-caption">什麼時候最適合你出沒？</div>
+      </div>
+      <div class="section-title">上課時間</div>
+      <div class="section-sub">選擇你方便的上課時段，我會盡量配合你的生活節奏安排。</div>
+      <div class="field">
+        <div class="field-label"><span class="required-dot"></span>方便的上課日（可複選）</div>
+        <div class="day-grid">
+          <div class="day-chip" onclick="toggleChip(this)">一<div class="day-en">MON</div></div>
+          <div class="day-chip" onclick="toggleChip(this)">二<div class="day-en">TUE</div></div>
+          <div class="day-chip" onclick="toggleChip(this)">三<div class="day-en">WED</div></div>
+          <div class="day-chip" onclick="toggleChip(this)">四<div class="day-en">THU</div></div>
+          <div class="day-chip" onclick="toggleChip(this)">五<div class="day-en">FRI</div></div>
+          <div class="day-chip" onclick="toggleChip(this)">六<div class="day-en">SAT</div></div>
+          <div class="day-chip" onclick="toggleChip(this)">日<div class="day-en">SUN</div></div>
+          <div class="day-chip" onclick="toggleChip(this)" style="font-size:11px;">彈性<div class="day-en">FLEX</div></div>
+        </div>
+      </div>
+      <div class="field">
+        <div class="field-label"><span class="required-dot"></span>偏好的時間段（可複選）</div>
+        <div class="time-grid">
+          <div class="time-chip" onclick="toggleChip(this)"><div class="time-label">MORNING</div>早上 9:00–12:00</div>
+          <div class="time-chip" onclick="toggleChip(this)"><div class="time-label">AFTERNOON</div>中午 12:00–15:00</div>
+          <div class="time-chip" onclick="toggleChip(this)"><div class="time-label">LATE AFT.</div>下午 15:00–18:00</div>
+          <div class="time-chip" onclick="toggleChip(this)"><div class="time-label">EVENING</div>晚上 18:00 以後</div>
+          <div class="time-chip" onclick="toggleChip(this)" style="grid-column:span 2;"><div class="time-label">FLEXIBLE</div>彈性配合，皆可討論</div>
+        </div>
+      </div>
+      <div class="nav-row">
+        <button class="btn-back" onclick="goTo(2)">← 返回</button>
+        <button class="btn-next" onclick="goTo(4)">下一步 <div class="btn-arrow">→</div></button>
+      </div>
+    </div>
+
+    <!-- Step 4 -->
+    <div class="section" id="sec4">
+      <div class="meme-strip">
+        <svg viewBox="0 0 680 130" xmlns="http://www.w3.org/2000/svg">
+          <rect width="680" height="130" fill="#f5f0ff"/>
+          <ellipse cx="340" cy="118" rx="200" ry="8" fill="#c8b8f0" opacity="0.35"/>
+          <ellipse cx="290" cy="108" rx="36" ry="16" fill="#9966cc"/>
+          <circle cx="290" cy="72" r="22" fill="#9966cc"/>
+          <polygon points="277,55 271,38 287,52" fill="#9966cc"/>
+          <polygon points="303,55 309,38 293,52" fill="#9966cc"/>
+          <polygon points="279,53 274,40 286,51" fill="#c8a0e8"/>
+          <polygon points="301,53 306,40 294,51" fill="#c8a0e8"/>
+          <circle cx="283" cy="70" r="5" fill="white"/>
+          <circle cx="297" cy="70" r="5" fill="white"/>
+          <circle cx="283" cy="70" r="3.5" fill="#1a0f00"/>
+          <circle cx="297" cy="70" r="3.5" fill="#1a0f00"/>
+          <circle cx="284" cy="69" r="1.2" fill="white"/>
+          <circle cx="298" cy="69" r="1.2" fill="white"/>
+          <path d="M284,78 Q290,84 296,78" stroke="#1a0f00" stroke-width="2" fill="none" stroke-linecap="round"/>
+          <ellipse cx="290" cy="76" rx="3" ry="2" fill="#e8748a"/>
+          <ellipse cx="263" cy="92" rx="10" ry="8" fill="#9966cc" transform="rotate(-30,263,92)"/>
+          <ellipse cx="317" cy="92" rx="10" ry="8" fill="#9966cc" transform="rotate(30,317,92)"/>
+          <text x="245" y="55" font-size="16" fill="#e8ff3b" opacity="0.9">★</text>
+          <text x="328" y="50" font-size="14" fill="#ff6b35" opacity="0.9">✦</text>
+          <rect x="355" y="18" rx="12" ry="12" width="260" height="58" fill="white" stroke="#d0c0f0" stroke-width="1.5"/>
+          <polygon points="363,76 350,88 375,76" fill="white"/>
+          <polygon points="364,76 350,90 375,76" fill="#d0c0f0"/>
+          <polygon points="364,76 350,88 375,76" fill="white"/>
+          <text x="485" y="44" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="700" fill="#1a1a2e">最後一步啦！</text>
+          <text x="485" y="63" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#6b6b7b">填完我就馬上聯絡你！📩</text>
+        </svg>
+        <div class="meme-caption">最後一步，你做到了！</div>
+      </div>
+      <div class="section-title">聯絡資訊</div>
+      <div class="section-sub">最後一步！填完就完成啦，我會盡快與你聯繫確認體驗課時間。</div>
+      <div class="trial-banner">
+        <div class="trial-left">
+          <div class="trial-tag">首次體驗</div>
+          <div class="trial-name">體驗課程</div>
+          <div class="trial-desc">60 分鐘・個人化評估 + 訓練</div>
+        </div>
+        <div class="trial-price">
+          <div class="trial-amt">$600</div>
+          <div class="trial-unit">單堂體驗</div>
+        </div>
+      </div>
+      <div class="info-box"><strong>📍 上課地點</strong>：確認預約後通知，以中山區為主。多數學員完成體驗課後可直接銜接下一季課程！</div>
+      <div class="field">
+        <div class="field-label"><span class="required-dot"></span>電子信箱</div>
+        <input class="text-input" type="email" placeholder="name@email.com">
+      </div>
+      <div class="field">
+        <div class="field-label"><span class="required-dot"></span>LINE ID</div>
+        <input class="text-input" type="text" placeholder="你的 LINE ID">
+      </div>
+      <div class="field">
+        <div class="field-label"><span class="required-dot"></span>你是怎麼認識我的？</div>
+        <div class="radio-group">
+          <div class="radio-item" onclick="selectRadio(this,'source')"><div class="radio-circle"></div><div><div class="radio-text">朋友或學員推薦</div></div></div>
+          <div class="radio-item" onclick="selectRadio(this,'source')"><div class="radio-circle"></div><div><div class="radio-text">Instagram / 社群媒體</div></div></div>
+          <div class="radio-item" onclick="selectRadio(this,'source')"><div class="radio-circle"></div><div><div class="radio-text">Google 搜尋</div></div></div>
+          <div class="radio-item" onclick="selectRadio(this,'source')"><div class="radio-circle"></div><div><div class="radio-text">健身房或實體場所</div></div></div>
+          <div class="radio-item" onclick="selectRadio(this,'source')"><div class="radio-circle"></div><div><div class="radio-text">其他</div></div></div>
+        </div>
+      </div>
+      <div class="field">
+        <div class="field-label">推薦人姓名</div>
+        <input class="text-input" type="text" placeholder="填入推薦人姓名（選填，推薦者可折價）">
+      </div>
+      <div class="field">
+        <div class="field-label">任何想提前說的事</div>
+        <textarea class="textarea-input" placeholder="舊傷、特殊狀況、訓練目標……任何想提前說的都可以寫在這裡"></textarea>
+      </div>
+      <div class="nav-row">
+        <button class="btn-back" onclick="goTo(3)">← 返回</button>
+        <button class="btn-submit" onclick="submitForm()">送出報名 ✦</button>
+      </div>
+    </div>
+
+    <div class="success-view" id="successView">
+      <div style="font-size:64px;margin-bottom:16px;">🐾</div>
+      <div class="success-icon">✦</div>
+      <div class="success-title">報名成功！</div>
+      <div class="success-desc">已收到你的體驗課報名，我會盡快透過 LINE 或 email 聯繫你確認時間與地點。期待和你一起訓練！</div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  let currentStep = 0;
+  function goTo(step) {
+    document.getElementById('sec'+currentStep).classList.remove('active');
+    document.getElementById('sec'+step).classList.add('active');
+    currentStep = step;
+    const dots = document.querySelectorAll('.step-dot');
+    dots.forEach((d,i) => { d.classList.remove('active','done'); if(i===currentStep) d.classList.add('active'); else if(i<currentStep) d.classList.add('done'); });
+    window.scrollTo({top:0, behavior:'smooth'});
+  }
+  function selectRadio(el) {
+    el.parentElement.querySelectorAll('.radio-item').forEach(e => e.classList.remove('selected'));
+    el.classList.add('selected');
+  }
+  function toggleChip(el) { el.classList.toggle('selected'); }
+  function submitForm() {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.getElementById('progressCard').style.display = 'none';
+    document.getElementById('successView').style.display = 'block';
+    window.scrollTo({top:0, behavior:'smooth'});
+  }
+</script>
+</body>
+</html>
