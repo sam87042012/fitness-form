@@ -464,7 +464,7 @@
       </div>
       <div class="nav-row">
         <button class="btn-back" onclick="goTo(3)">← 返回</button>
-        <button class="btn-submit" onclick="submitForm()">送出報名 ✦</button>
+        <button class="btn-submit" id="submitBtn" onclick="submitForm()">送出報名 ✦</button>
       </div>
     </div>
 
@@ -493,11 +493,101 @@
     el.classList.add('selected');
   }
   function toggleChip(el) { el.classList.toggle('selected'); }
-  function submitForm() {
-    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-    document.getElementById('progressCard').style.display = 'none';
-    document.getElementById('successView').style.display = 'block';
-    window.scrollTo({top:0, behavior:'smooth'});
+
+  function collectFormData() {
+    const data = {};
+
+    // 性別
+    const gender = document.querySelector('[data-group="gender"].selected, #sec0 .radio-item.selected');
+    data['性別'] = gender ? gender.querySelector('.radio-text').innerText : '未填寫';
+
+    // 年齡
+    const age = document.querySelector('#sec0 .radio-group:nth-of-type(2) .radio-item.selected');
+    data['年齡'] = age ? age.querySelector('.radio-text').innerText : '未填寫';
+
+    // 健身經驗
+    const exp = document.querySelector('#sec0 .radio-group:nth-of-type(3) .radio-item.selected');
+    data['健身經驗'] = exp ? exp.querySelector('.radio-text').innerText : '未填寫';
+
+    // 訓練目標
+    const goals = [...document.querySelectorAll('#sec1 .goal-chip.selected')].map(el => el.querySelector('.goal-name').innerText);
+    data['訓練目標'] = goals.length ? goals.join('、') : '未選擇';
+
+    // 教練指導
+    const coach = document.querySelector('#sec1 .radio-item.selected');
+    data['教練指導'] = coach ? coach.querySelector('.radio-text').innerText : '未填寫';
+
+    // 健身頻率
+    const freq = document.querySelector('#sec2 .radio-group:nth-of-type(1) .radio-item.selected');
+    data['每週健身頻率'] = freq ? freq.querySelector('.radio-text').innerText : '未填寫';
+
+    // 有氧
+    const cardio = document.querySelector('#sec2 .radio-group:nth-of-type(2) .radio-item.selected');
+    data['有氧訓練'] = cardio ? cardio.querySelector('.radio-text').innerText : '未填寫';
+
+    // 傷病
+    const injury = document.querySelector('#sec2 .radio-group:nth-of-type(3) .radio-item.selected');
+    data['傷病史'] = injury ? injury.querySelector('.radio-text').innerText : '未填寫';
+
+    // 上課日
+    const days = [...document.querySelectorAll('#sec3 .day-chip.selected')].map(el => el.innerText.split('\n')[0]);
+    data['方便上課日'] = days.length ? days.join('、') : '未選擇';
+
+    // 時間段
+    const times = [...document.querySelectorAll('#sec3 .time-chip.selected')].map(el => el.innerText.replace(/\n/g,' ').trim());
+    data['偏好時間'] = times.length ? times.join('、') : '未選擇';
+
+    // 聯絡資料
+    const inputs = document.querySelectorAll('#sec4 .text-input');
+    data['Email'] = inputs[0] ? inputs[0].value : '';
+    data['LINE ID'] = inputs[1] ? inputs[1].value : '';
+    data['推薦人'] = inputs[2] ? inputs[2].value : '';
+
+    // 來源
+    const source = document.querySelector('#sec4 .radio-item.selected');
+    data['如何認識'] = source ? source.querySelector('.radio-text').innerText : '未填寫';
+
+    // 備註
+    const note = document.querySelector('#sec4 .textarea-input');
+    data['備註'] = note ? note.value : '';
+
+    return data;
+  }
+
+  async function submitForm() {
+    const btn = document.getElementById('submitBtn');
+    btn.textContent = '送出中...';
+    btn.disabled = true;
+
+    const data = collectFormData();
+
+    // 組成 Formspree 格式
+    const payload = {
+      _replyto: data['Email'] || 'noreply@example.com',
+      _subject: '🏋️ 新的健身體驗課報名！',
+      ...data
+    };
+
+    try {
+      const res = await fetch('https://formspree.io/f/mgodkopy', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+
+      if (res.ok) {
+        document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+        document.getElementById('progressCard').style.display = 'none';
+        document.getElementById('successView').style.display = 'block';
+        window.scrollTo({top:0, behavior:'smooth'});
+      } else {
+        btn.textContent = '送出失敗，請再試一次';
+        btn.disabled = false;
+      }
+    } catch(e) {
+      btn.textContent = '送出失敗，請再試一次';
+      btn.disabled = false;
+    }
   }
 </script>
 </body>
